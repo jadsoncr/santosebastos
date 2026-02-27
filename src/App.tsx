@@ -4,7 +4,6 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   Scale, 
@@ -402,13 +401,29 @@ const Footer = () => {
 
 
 export default function App() {
+  useEffect(() => {
+    document.title = 'Santos & Bastos Advogados — Advocacia Trabalhista e Civil | Rio de Janeiro';
+
+    const description = 'Santos & Bastos Advogados — escritório no Rio de Janeiro especializado em Direito do Trabalho, Civil e do Consumidor. Atendimento personalizado e defesa estratégica dos seus direitos.';
+    let meta = document.querySelector('meta[name="description"]') as HTMLMetaElement | null;
+    if (!meta) {
+      meta = document.createElement('meta');
+      meta.setAttribute('name', 'description');
+      document.head.appendChild(meta);
+    }
+    meta.setAttribute('content', description);
+
+    const canonicalHref = 'https://santosebastosadv.com.br/';
+    let linkCanonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+    if (!linkCanonical) {
+      linkCanonical = document.createElement('link');
+      linkCanonical.setAttribute('rel', 'canonical');
+      document.head.appendChild(linkCanonical);
+    }
+    linkCanonical.setAttribute('href', canonicalHref);
+  }, []);
   return (
     <div className="min-h-screen selection:bg-brand-gold/30 selection:text-brand-gold">
-      <Helmet>
-        <title>Santos & Bastos Advogados — Advocacia Trabalhista e Civil | Rio de Janeiro</title>
-        <meta name="description" content="Santos & Bastos Advogados — escritório no Rio de Janeiro especializado em Direito do Trabalho, Civil e do Consumidor. Atendimento personalizado e defesa estratégica dos seus direitos." />
-        <link rel="canonical" href="https://santosebastosadv.com.br/" />
-      </Helmet>
       <Navbar />
       <Hero />
       <PracticeAreas />
