@@ -5,16 +5,15 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { 
-  Scale, 
-  Briefcase, 
-  ShieldCheck, 
-  MapPin, 
-  Phone, 
-  Mail, 
-  MessageSquare, 
-  ChevronRight, 
-  Menu, 
+import {
+  Briefcase,
+  ShieldCheck,
+  MapPin,
+  Phone,
+  Mail,
+  MessageSquare,
+  ChevronRight,
+  Menu,
   X,
   Instagram,
   Facebook,
@@ -115,15 +114,27 @@ const Hero = () => {
     <section id="home" className="relative min-h-screen flex items-center pt-20 overflow-hidden">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
-        <img 
-          src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&q=80&w=2000" 
-          alt="Escritório de Advocacia" 
-          className="w-full h-full object-cover opacity-20"
-          width={2000}
-          height={1200}
-          loading="lazy"
-          referrerPolicy="no-referrer"
-        />
+        <picture>
+          <source
+            type="image/webp"
+            srcSet="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&q=80&fm=webp&w=800 800w, https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&q=80&fm=webp&w=1200 1200w, https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&q=80&fm=webp&w=2000 2000w"
+            sizes="(max-width: 768px) 800px, (max-width: 1200px) 1200px, 2000px"
+          />
+          <source
+            type="image/jpeg"
+            srcSet="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&q=80&w=800 800w, https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&q=80&w=1200 1200w, https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&q=80&w=2000 2000w"
+            sizes="(max-width: 768px) 800px, (max-width: 1200px) 1200px, 2000px"
+          />
+          <img
+            src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&q=80&w=2000"
+            alt="Lombadas de livros jurídicos em estante"
+            className="w-full h-full object-cover opacity-20"
+            width={2000}
+            height={1200}
+            loading="lazy"
+            referrerPolicy="no-referrer"
+          />
+        </picture>
         <div className="absolute inset-0 bg-linear-to-b from-brand-navy/80 via-brand-navy to-brand-navy"></div>
       </div>
 
@@ -421,33 +432,112 @@ const Footer = () => {
 
 export default function App() {
   useEffect(() => {
-    document.title = 'Santos & Bastos Advogados — Advocacia Trabalhista e Civil | Rio de Janeiro';
+    // dynamic meta by hash (home, about, practice, contact)
+    function applyMetaForHash() {
+      const hash = window.location.hash || '#home';
+      const map: Record<string, { title: string; description: string; canonical: string; ogImage?: string }> = {
+        '#home': {
+          title: 'Santos & Bastos Advogados — Advocacia Trabalhista e Civil | Rio de Janeiro',
+          description: 'Santos & Bastos Advogados — escritório no Rio de Janeiro especializado em Direito do Trabalho, Civil e do Consumidor. Atendimento personalizado e defesa estratégica dos seus direitos.',
+          canonical: 'https://santosebastosadv.com.br/' ,
+          ogImage: 'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&q=80&w=1200'
+        },
+        '#about': {
+          title: 'Sócios Fundadores — Santos & Bastos Advogados',
+          description: 'Conheça os sócios fundadores e a experiência do escritório Santos & Bastos.',
+          canonical: 'https://santosebastosadv.com.br/#about',
+        },
+        '#practice': {
+          title: 'Áreas de Atuação — Santos & Bastos Advogados',
+          description: 'Áreas de atuação: Direito do Trabalho, Direito Civil, Direito do Consumidor e Segurança e Saúde no Trabalho.',
+          canonical: 'https://santosebastosadv.com.br/#practice',
+        },
+        '#contact': {
+          title: 'Contato — Santos & Bastos Advogados',
+          description: 'Entre em contato com Santos & Bastos Advogados. Agende uma consulta ou visite nosso escritório.',
+          canonical: 'https://santosebastosadv.com.br/#contact',
+        }
+      };
 
-    const description = 'Santos & Bastos Advogados — escritório no Rio de Janeiro especializado em Direito do Trabalho, Civil e do Consumidor. Atendimento personalizado e defesa estratégica dos seus direitos.';
-    let meta = document.querySelector('meta[name="description"]') as HTMLMetaElement | null;
-    if (!meta) {
-      meta = document.createElement('meta');
-      meta.setAttribute('name', 'description');
-      document.head.appendChild(meta);
-    }
-    meta.setAttribute('content', description);
+      const meta = map[hash] || map['#home'];
 
-    const canonicalHref = 'https://santosebastosadv.com.br/';
-    let linkCanonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
-    if (!linkCanonical) {
-      linkCanonical = document.createElement('link');
-      linkCanonical.setAttribute('rel', 'canonical');
-      document.head.appendChild(linkCanonical);
+      document.title = meta.title;
+
+      let desc = document.querySelector('meta[name="description"]') as HTMLMetaElement | null;
+      if (!desc) {
+        desc = document.createElement('meta');
+        desc.setAttribute('name', 'description');
+        document.head.appendChild(desc);
+      }
+      desc.setAttribute('content', meta.description);
+
+      let linkCanonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+      if (!linkCanonical) {
+        linkCanonical = document.createElement('link');
+        linkCanonical.setAttribute('rel', 'canonical');
+        document.head.appendChild(linkCanonical);
+      }
+      linkCanonical.setAttribute('href', meta.canonical);
+
+      // OG/Twitter meta
+      function setMeta(name: string, content: string) {
+        let m = document.querySelector(`meta[property="${name}"]`) as HTMLMetaElement | null;
+        if (!m) {
+          m = document.createElement('meta');
+          m.setAttribute('property', name);
+          document.head.appendChild(m);
+        }
+        m.setAttribute('content', content);
+      }
+      setMeta('og:title', meta.title);
+      setMeta('og:description', meta.description);
+      if (meta.ogImage) setMeta('og:image', meta.ogImage);
+      // twitter card
+      let tcard = document.querySelector('meta[name="twitter:card"]') as HTMLMetaElement | null;
+      if (!tcard) {
+        tcard = document.createElement('meta');
+        tcard.setAttribute('name', 'twitter:card');
+        document.head.appendChild(tcard);
+      }
+      tcard.setAttribute('content', 'summary_large_image');
+
+      // breadcrumb JSON-LD (single-level for now)
+      const breadcrumb = {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        'itemListElement': [
+          {
+            '@type': 'ListItem',
+            'position': 1,
+            'name': 'Início',
+            'item': 'https://santosebastosadv.com.br/'
+          }
+        ]
+      };
+      let script = document.getElementById('breadcrumb-jsonld') as HTMLScriptElement | null;
+      if (!script) {
+        script = document.createElement('script');
+        script.type = 'application/ld+json';
+        script.id = 'breadcrumb-jsonld';
+        document.head.appendChild(script);
+      }
+      script.text = JSON.stringify(breadcrumb);
     }
-    linkCanonical.setAttribute('href', canonicalHref);
+
+    applyMetaForHash();
+    window.addEventListener('hashchange', applyMetaForHash);
+    return () => window.removeEventListener('hashchange', applyMetaForHash);
   }, []);
+
   return (
     <div className="min-h-screen selection:bg-brand-gold/30 selection:text-brand-gold">
       <Navbar />
-      <Hero />
-      <PracticeAreas />
-      <About />
-      <Contact />
+      <main id="main-content">
+        <Hero />
+        <PracticeAreas />
+        <About />
+        <Contact />
+      </main>
       <Footer />
     </div>
   );
