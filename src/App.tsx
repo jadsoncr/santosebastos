@@ -196,7 +196,17 @@ const PracticeAreas = () => {
     {
       title: "Direito Civil",
       description: "Resolução de conflitos, contratos, responsabilidade civil e questões possessórias com foco na segurança jurídica.",
-      icon: <Scale className="text-brand-gold" size={32} />,
+      icon: (
+        <img
+          src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&q=80&w=800"
+          alt="Estante de livros representando Direito Civil"
+          className="w-10 h-10 object-cover rounded-md"
+          width={40}
+          height={40}
+          loading="lazy"
+          referrerPolicy="no-referrer"
+        />
+      ),
     },
     {
       title: "Segurança e Saúde no Trabalho",
