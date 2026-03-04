@@ -119,6 +119,9 @@ const Hero = () => {
           src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&q=80&w=2000" 
           alt="Escritório de Advocacia" 
           className="w-full h-full object-cover opacity-20"
+          width={2000}
+          height={1200}
+          loading="lazy"
           referrerPolicy="no-referrer"
         />
         <div className="absolute inset-0 bg-linear-to-b from-brand-navy/80 via-brand-navy to-brand-navy"></div>
@@ -167,9 +170,12 @@ const Hero = () => {
           <div className="relative z-10 rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
             <img 
               src="https://images.unsplash.com/photo-1505664194779-8beaceb93744?auto=format&fit=crop&q=80&w=1000" 
-              alt="Justiça" 
-              className="w-full h-auto"
-              referrerPolicy="no-referrer"
+                alt="Justiça" 
+                className="w-full h-auto"
+                width={1000}
+                height={667}
+                loading="lazy"
+                referrerPolicy="no-referrer"
             />
           </div>
           {/* Decorative elements */}
@@ -294,6 +300,9 @@ const About = () => {
                     src={partner.image} 
                     alt={partner.name} 
                     className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100"
+                    width={400}
+                    height={400}
+                    loading="lazy"
                     referrerPolicy="no-referrer"
                   />
                 </div>
